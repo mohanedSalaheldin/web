@@ -1,5 +1,9 @@
 package com.first_spring.web.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,4 +35,16 @@ public class UserEntity {
 
     @Column(name = "is_active", nullable = false)
     private Integer isActive;
+
+    @JsonManagedReference("user-address")
+    @OneToOne(mappedBy = "userEntity")
+    private AddressEntity addressEntity;
+
+    @JsonManagedReference("user-notes")
+    @OneToMany(mappedBy = "userEntity")
+    private List<NoteEntity> notesEntity;
+
+    @JsonManagedReference("user-courses")
+    @OneToMany(mappedBy = "userEntity")
+    private List<UserCoursesEntity> userCoursesEntities;
 }
